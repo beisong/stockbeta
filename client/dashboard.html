@@ -1,0 +1,42 @@
+<template name="dashboard">
+    <h2>sbeta</h2>
+
+
+    <button type="button" class="btn btn-default codebutton" value="B2F">M1</button>
+    <button type="button" class="btn btn-default codebutton" value="544">CSE</button>
+    <button type="button" class="btn btn-default codebutton" value="BSL">Raffles</button>
+    <button type="button" class="btn btn-default codebutton" value="B73">Global</button>
+    <button type="button" class="btn btn-default codebutton" value="F34">Wilmar</button>
+    <button type="button" class="btn btn-default codebutton" value="BN4">Keppel</button>
+    <button type="button" class="btn btn-default codebutton" value="C29">Chip</button>
+    <button type="button" class="btn btn-default codebutton" value="AWX">aem</button>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Open</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Close</th>
+                <th>Vol</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each data}}
+                <tr>
+                    <td>{{date}}</td>
+                    <td>{{open}}</td>
+                    <td>{{high}}</td>
+                    <td>{{low}}</td>
+                    <td>{{close}}</td>
+                    <td>{{vol}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+
+        </table>
+    </div>
+
+</template>

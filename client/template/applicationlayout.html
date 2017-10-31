@@ -1,0 +1,19 @@
+<template name="ApplicationLayout">
+    <head>
+        <title>StockBeta</title>
+    </head>
+
+    <div>
+        {{> navbar}}
+    </div>
+
+    <div>
+        {{> yield region="body"}}
+    </div>
+
+    <footer class="footer">
+        <!--{{> footer}}-->
+    </footer>
+
+</template>
+
