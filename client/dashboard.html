@@ -1,15 +1,21 @@
 <template name="dashboard">
-    <h2>sbeta</h2>
+    <div class="container">
+        <h2>sbeta</h2>
+    </div>
+    <div class="container">
+        <h3>Watchlist</h3>
+        {{#each watchlist}}
+            <button type="button" class="btn btn-default codebutton" value="{{code}}">{{code}}</button>
+        {{/each}}
+    </div>
 
-
-    <button type="button" class="btn btn-default codebutton" value="B2F">M1</button>
-    <button type="button" class="btn btn-default codebutton" value="544">CSE</button>
-    <button type="button" class="btn btn-default codebutton" value="BSL">Raffles</button>
-    <button type="button" class="btn btn-default codebutton" value="B73">Global</button>
-    <button type="button" class="btn btn-default codebutton" value="F34">Wilmar</button>
-    <button type="button" class="btn btn-default codebutton" value="BN4">Keppel</button>
-    <button type="button" class="btn btn-default codebutton" value="C29">Chip</button>
-    <button type="button" class="btn btn-default codebutton" value="AWX">aem</button>
+    <div class="container">
+        <form id="addCodeForm">
+            <label for="code">Counter Code:</label>
+            <input type="text" name="code" id="stockcode">
+            <button type="submit" class="btn btn-default btn-primary">Add to Watchlist</button>
+        </form>
+    </div>
 
     <div class="container">
         <table class="table table-striped">

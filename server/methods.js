@@ -1,12 +1,11 @@
 Meteor.methods({
-
     getStockData: function (code, period, interval) {
         this.unblock();
         var apiCallString = "https://finance.google.com/finance/getprices?x=SGX&" +
             "q=" + code +
             "&p=" + period +
             "&i=" + interval +
-            "&f=d,o,h,l,c,v";
+            "&f=d,c,h,l,o,v";
         console.log(apiCallString);
 
         var result = Meteor.http.call("GET", apiCallString);
@@ -15,7 +14,6 @@ Meteor.methods({
         var result_arr = result.content.split(/\r?\n/); // split into array by '\n'
 
         //get interval =
-        console.log(result_arr[3]);
         var interval = result_arr[3].substr(9);
 
 
@@ -47,10 +45,10 @@ Meteor.methods({
                 //Create new total Obj
                 var daySummary = {};
                 daySummary.date = "Day Summary";
-                daySummary.open = splitagain[1];
+                daySummary.close = splitagain[1];
                 daySummary.high = splitagain[2];
                 daySummary.low = splitagain[3];
-                daySummary.close = splitagain[4];
+                daySummary.open = splitagain[4];
                 daySummary.vol = 0;
 
             }
@@ -60,10 +58,10 @@ Meteor.methods({
                 dataobj.date = thisdate;
             }
 
-            dataobj.open = splitagain[1];
+            dataobj.close = splitagain[1];
             dataobj.high = splitagain[2];
             dataobj.low = splitagain[3];
-            dataobj.close = splitagain[4];
+            dataobj.open = splitagain[4];
             dataobj.vol = parseFloat(splitagain[5]) / 1000;//Math.round(parseFloat(splitagain[5]) / 100) / 10;
 
             daySummary.high = parseFloat(dataobj.high) > parseFloat(daySummary.high) ? dataobj.high : daySummary.high;
@@ -76,6 +74,10 @@ Meteor.methods({
         daySummary.vol = Math.round(daySummary.vol * 10) / 10;
         dataarr.push(daySummary);
         return dataarr;
-
+    },
+    addToWatchlist: function (stockcode) {
+        Watchlist.insert({
+            code: stockcode
+        });
     }
 });

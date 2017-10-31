@@ -1,20 +1,35 @@
 Template.dashboard.onRendered(function () {
 
+    //TODO separate to 2 section
+    // 1) historical data -  20min interval across few months
+    // 2) today live data - 1min refresh , Today only
+
 });
 
 Template.dashboard.events({
     'click .codebutton': function (event) {
         console.log("asds");
-        Meteor.call("getStockData", event.target.value, '1d', "600", function (error, results) {
+        Meteor.call("getStockData", event.target.value, '1d', "1200", function (error, results) {
             if (results) {
                 Session.set('data', results);
             }
+        });
+    },
+
+    'submit #addCodeForm': function (event) {
+        event.preventDefault();
+        var stockcode = event.target["code"].value;
+        Meteor.call("addToWatchlist", stockcode.toUpperCase(), function (error, results) {
         });
     }
 });
 
 
 Template.dashboard.helpers({
+    watchlist: function () {
+        return Watchlist.find();
+    }
+    ,
     data: function () {
         return Session.get('data');
     }
