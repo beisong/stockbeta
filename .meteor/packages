@@ -25,3 +25,5 @@ iron:router                             #router
 twbs:bootstrap                          #Twitter bootstrap
 session                                 #Session Package
 http                                    #HTTP for api calls
+d3js:d3                                # d3 for charting
+superandrew:techan                      #techan for candlestick

@@ -1,0 +1,29 @@
+<template name="liveform">
+    <div class="container">
+        <form class="form-inline live_form">
+            <div class="form-group">
+                <label for="exchange">Select Exchange:</label>
+                <select class="form-control" name="exchange">
+                    <option value="NASDAQ">New York - NASDAQ</option>
+                    <option value="NYSE">New York - NYSE</option>
+                    <option value="NYSEAMERICAN">New York - NYSEAMERICAN</option>
+                    <option value="SGX" selected>Singapore - SGX</option>
+                    <option value="LON">London - LON</option>
+                    <option value="INDEXEURO">Europe - INDEXEURO</option>
+                    <option value="ASX">Aus - ASX</option>
+                    <option value="TSE">Toronto - TSE</option>
+                    <option value="HKG">Hong Kong - HKG</option>
+                    <option value="TYO">Tokyo - TYO</option>
+                    <option value="SHA">Shanghai - SHA</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="code">Code:</label>
+                <input type="text" class="form-control" name="code">
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</template>

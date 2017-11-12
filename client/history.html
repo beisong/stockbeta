@@ -1,0 +1,37 @@
+<template name="history">
+
+    <h1>{{code}} for {{paramdate}}</h1>
+
+    <svg id="chartArea"></svg>
+
+    <h3>Raw Data</h3>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Open</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Close</th>
+                <th>Vol</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each daydata}}
+                <tr>
+                    <td>{{date}}</td>
+                    <td>{{open}}</td>
+                    <td>{{high}}</td>
+                    <td>{{low}}</td>
+                    <td>{{close}}</td>
+                    <td>{{vol}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+
+</template>

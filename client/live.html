@@ -1,22 +1,6 @@
-<template name="dashboard">
-    <div class="container">
-        <h2>sbeta</h2>
-        <button type="button" class="btn btn-warning" id="fetchHistoryBut">Fetch History</button>
-    </div>
-    <div class="container">
-        <h3>Wl</h3>
-        {{#each watchlist}}
-            <button type="button" class="btn btn-default codebutton" value="{{code}}">{{code}}</button>
-        {{/each}}
-    </div>
-
-    <div class="container">
-        <form id="addCodeForm">
-            <label for="code">Counter Code:</label>
-            <input type="text" name="code" id="stockcode">
-            <button type="submit" class="btn btn-default btn-primary">Add to Watchlist</button>
-        </form>
-    </div>
+<template name="live">
+    <h2>testing area</h2>
+    <svg id="candleChartArea"></svg>
 
     <div class="container">
         <table class="table table-striped">
@@ -45,6 +29,4 @@
 
         </table>
     </div>
-
-
 </template>

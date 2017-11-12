@@ -4,6 +4,8 @@ Template.dashboard.onRendered(function () {
     // 1) historical data -  20min interval across few months
     // 2) today live data - 1min refresh , Today only
 
+    //TODO !!!!! METOER UP
+
 });
 
 Template.dashboard.events({
@@ -15,7 +17,11 @@ Template.dashboard.events({
             }
         });
     },
-
+    'click #fetchHistoryBut': function (event) {
+        Meteor.call("fetchHistory", function (error, results) {
+            console.log("history fetched");
+        });
+    },
     'submit #addCodeForm': function (event) {
         event.preventDefault();
         var stockcode = event.target["code"].value;
@@ -28,9 +34,11 @@ Template.dashboard.events({
 Template.dashboard.helpers({
     watchlist: function () {
         return Watchlist.find();
-    }
-    ,
+    },
     data: function () {
         return Session.get('data');
+    },
+    mongodata: function () {
+        return History.find();
     }
 });
