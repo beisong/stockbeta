@@ -30,7 +30,7 @@ Template.live.onRendered(function () {
 
 Template.live.helpers({
     code: function () {
-        return "B2F";
+        return Router.current().params.code.toUpperCase();
     },
     data: function () {
         return Session.get('data');
