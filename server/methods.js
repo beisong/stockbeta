@@ -94,7 +94,7 @@ Meteor.methods({
         var watchlist = Watchlist.find();
         var interval = 1200;
 
-        History.remove({})
+        History.remove({});
 
         //loop thru watchlist and fetch all
         watchlist.forEach(function (each) {
@@ -103,7 +103,7 @@ Meteor.methods({
 
             var apiCallString = "https://finance.google.com/finance/getprices?" +
                 "x=" + 'SGX' +
-                "q=" + each.code +
+                "&q=" + each.code +
                 "&p=" + "1Y" +
                 "&i=" + interval +
                 "&f=d,c,h,l,o,v";
