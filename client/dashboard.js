@@ -11,7 +11,7 @@ Template.dashboard.onRendered(function () {
 Template.dashboard.events({
     'click .codebutton': function (event) {
         console.log("asds");
-        Meteor.call("getStockData", event.target.value, '1d', "1200", function (error, results) {
+        Meteor.call("getStockData", 'sgx', event.target.value, '1d', "1200", function (error, results) {
             if (results) {
                 Session.set('data', results);
             }
