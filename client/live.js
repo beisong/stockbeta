@@ -9,19 +9,17 @@ Template.live.onCreated(function () {
         function (error, results) {
             if (results) {
                 Session.set('data', results);
-                console.log("getStockData API CALL");
+                // console.log("getStockData API CALL");
             }
             else {
                 alert("Nothing found. Please Try again...");
                 Router.go('home');
             }
         });
-    console.log("ONCREATE");
 });
 
 Template.live.onRendered(function () {
     this.autorun(function () {
-        console.log("AUTORAN!!");
         if (Session.get('data')) {
             drawCandleChart('candleChartArea', Session.get('data'));
         }

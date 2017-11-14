@@ -1,6 +1,4 @@
 drawCandleChart = function (divid, data) {
-    console.log("data in methods is :");
-    console.log(data);
 
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
         width = 960 - margin.left - margin.right,
@@ -48,8 +46,7 @@ drawCandleChart = function (divid, data) {
     var accessor = candlestick.accessor();
 
     data = data.map(function (d) {
-        console.log(d.date);
-        // console.log(parseDate.parse(d.date.trim()));
+        // console.log(d.date);
         return {
             // date: parseDate.parse(d.date.trim()),
             date: d.date,
