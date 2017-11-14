@@ -12,7 +12,8 @@ Template.live.onCreated(function () {
                 console.log("getStockData API CALL");
             }
             else {
-                console.log("code error");
+                alert("Nothing found. Please Try again...");
+                Router.go('home');
             }
         });
     console.log("ONCREATE");

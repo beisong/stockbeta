@@ -5,6 +5,11 @@ Template.dashboard.onRendered(function () {
     // 2) today live data - 1min refresh , Today only
 
     //TODO !!!!! METOER UP
+    //TODO GOOGLE ANALYTICS
+    //TODO SEO OPTIMISATION
+    //TODO Responsive
+    //TODO google ads
+
 
 });
 

@@ -38,10 +38,10 @@ drawCandleChart = function (divid, data) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    d3.csv("data.csv", function (error, data) {
-        console.log("csv data is ");
-        console.log(data);
-    });
+    // d3.csv("data.csv", function (error, data) {
+    //     console.log("csv data is ");
+    //     console.log(data);
+    // });
 
     // var data = Session.get('data');
 
