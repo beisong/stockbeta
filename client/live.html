@@ -1,8 +1,14 @@
 <template name="live">
 
-    <h2> Intraday Chart for {{code}} </h2>
-    <svg id="candleChartArea"></svg>
+    <div class="container">
+        <h2 style="color:white">
+            Intraday Chart for {{code}}
+        </h2>
+    </div>
 
+    <div class="card">
+        <svg id="candleChartArea"></svg>
+    </div>
     <div class="container">
         <table class="table table-striped">
             <thead>

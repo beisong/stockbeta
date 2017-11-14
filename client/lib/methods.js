@@ -1,8 +1,35 @@
+Template.registerHelper('checkLastUsed', (value)=> {
+        if (localStorage.getItem("stockexchange")) {
+            if (localStorage.getItem("stockexchange") == value) {
+                return 'selected';
+            }
+        }
+        else {
+            if ('default' == value) {
+                return 'selected';
+            }
+        }
+
+    }
+);
+
 drawCandleChart = function (divid, data) {
 
-    var margin = {top: 20, right: 20, bottom: 30, left: 50},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+    var margin = {top: 20, right: 20, bottom: 30, left: 50}, width, height;
+    // var width = 360 - margin.left - margin.right;
+    // var height = 260 - margin.top - margin.bottom;
+
+    width = window.innerWidth - margin.left - margin.right;
+
+
+    if (window.innerWidth < 500) {
+        width = window.innerWidth - margin.left - margin.right;
+        height = Math.round(width * 0.8);
+    }
+    else {
+        width = Math.round(window.innerWidth * 0.8) - margin.left - margin.right;
+        height = window.innerHeight * 0.7;
+    }
 
     var parseDate = d3.time.format("%d-%b-%y");
 

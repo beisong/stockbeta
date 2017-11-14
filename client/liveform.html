@@ -1,34 +1,28 @@
 <template name="liveform">
-    <article>
-        <header>
-            <h3>Intraday Chart for Various Markets</h3>
-        </header>
-    </article>
-    <div class="container">
+
+    <div class="liveform">
+        <h1>Find your stock!</h1>
         <form class="form-inline live_form">
-            <div class="form-group">
-                <label for="exchange">Select Exchange:</label>
-                <select class="form-control" name="exchange" id="exchange">
-                    <option value="NASDAQ">New York - NASDAQ</option>
-                    <option value="NYSE">New York - NYSE</option>
-                    <option value="NYSEAMERICAN">New York - NYSEAMERICAN</option>
-                    <option value="SGX" selected>Singapore - SGX</option>
-                    <option value="LON">London - LON</option>
-                    <option value="INDEXEURO">Europe - INDEXEURO</option>
-                    <option value="ASX">Aus - ASX</option>
-                    <option value="TSE">Toronto - TSE</option>
-                    <option value="HKG">Hong Kong - HKG</option>
-                    <option value="TYO">Tokyo - TYO</option>
-                    <option value="SHA">Shanghai - SHA</option>
+            <div class="dropdown">
+                <select name="exchange" id="exchange">
+                    <option disabled {{checkLastUsed 'default'}}>Choose Market</option>
+                    <option value="NASDAQ" {{checkLastUsed 'NASDAQ'}}>New York - NASDAQ</option>
+                    <option value="NYSE" {{checkLastUsed 'NYSE'}}>New York - NYSE</option>
+                    <option value="NYSEAMERICAN" {{checkLastUsed 'NYSEAMERICAN'}}>New York - NYSEAMERICAN</option>
+                    <!--<option value="SGX" selected>Singapore - SGX</option>-->
+                    <option value="SGX" {{checkLastUsed 'SGX'}}>Singapore - SGX</option>
+                    <option value="LON" {{checkLastUsed 'LON'}}>London - LON</option>
+                    <option value="INDEXEURO" {{checkLastUsed 'INDEXEURO'}}>Europe - INDEXEURO</option>
+                    <option value="ASX" {{checkLastUsed 'ASX'}}>Aus - ASX</option>
+                    <option value="TSE" {{checkLastUsed 'TSE'}}>Toronto - TSE</option>
+                    <option value="HKG" {{checkLastUsed 'HKG'}}>Hong Kong - HKG</option>
+                    <option value="TYO" {{checkLastUsed 'TYO'}}>Tokyo - TYO</option>
+                    <option value="SHA" {{checkLastUsed 'SHA'}}>Shanghai - SHA</option>
                 </select>
             </div>
+            <input type="text" name="code" placeholder="Stock Code">
+            <button type="submit" class="btn btn-primary btn-block btn-large">Go</button>
 
-            <div class="form-group">
-                <label for="code">Code:</label>
-                <input type="text" class="form-control" name="code">
-            </div>
-
-            <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
 </template>
