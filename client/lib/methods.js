@@ -57,6 +57,8 @@ drawCandleChart = function (divid, data) {
         .orient("left")
         .scale(y);
 
+    d3.selectAll("svg > *").remove(); // Clear svg child element first
+
     var svg = d3.select("#" + divid)
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
