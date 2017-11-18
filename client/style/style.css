@@ -194,6 +194,14 @@ table {
 }
 
 @media only screen and (max-width: 500px) {
+    select {
+        font-size: 16px !important;
+    }
+
+    input {
+        font-size: 16px !important;
+    }
+
     .card {
         width: 100%;
     }

@@ -32,6 +32,8 @@ Template.live.helpers({
         return Router.current().params.code.toUpperCase();
     },
     data: function () {
-        return Session.get('data');
+        if (Session.get('data')) {
+            return Session.get('data');
+        }
     },
 });

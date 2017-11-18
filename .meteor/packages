@@ -28,3 +28,4 @@ http                                    #HTTP for api calls
 d3js:d3                                # d3 for charting
 superandrew:techan                      #techan for candlestick
 okgrow:analytics                            #Analytics
+momentjs:moment                            #format date

@@ -13,6 +13,19 @@ Template.registerHelper('checkLastUsed', (value)=> {
     }
 );
 
+Template.registerHelper('formatedate', (thisdate)=> {
+        // return moment(thisdate).format('h:mma  DD-MMM-YY');
+        return moment(thisdate).calendar();
+    }
+);
+
+
+Template.registerHelper("lastdone", function (array) {
+    if (array) {
+        return array[array.length - 1].close;
+    }
+});
+
 drawCandleChart = function (divid, data) {
 
     var margin = {top: 20, right: 20, bottom: 30, left: 50}, width, height;
