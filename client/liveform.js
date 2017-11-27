@@ -8,13 +8,14 @@ Template.liveform.events({
         if (exchange == 'Choose Market') {
             alert("Please Select a Stock Exchange");
         }
+        else if (!code) {
+            alert("Please enter a Stock Ticker Symbol Code");
+        }
         else {
             localStorage.setItem('stockexchange', exchange);
 
             Router.go('/live/' + exchange + '/' + code);
         }
-
-
     }
 });
 
