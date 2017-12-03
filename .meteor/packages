@@ -29,3 +29,4 @@ d3js:d3                                # d3 for charting
 superandrew:techan                      #techan for candlestick
 okgrow:analytics                            #Analytics
 momentjs:moment                            #format date
+rajit:bootstrap3-datepicker

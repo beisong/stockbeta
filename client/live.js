@@ -1,5 +1,4 @@
 Template.live.onCreated(function () {
-    //TODO dynamically change period based on time
 
     Meteor.call("getStockData",
         Router.current().params.exchange.toUpperCase(),

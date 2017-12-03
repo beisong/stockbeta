@@ -1,5 +1,5 @@
 Meteor.methods({
-    getStockData: function (exchange, code, period, interval) {
+    getStockData: function (exchange, code, period, interval, startdate, graphlen) {
         this.unblock();
         var apiCallString = "https://finance.google.com/finance/getprices?" +
             "&x=" + exchange +
@@ -9,86 +9,16 @@ Meteor.methods({
             "&f=d,c,h,l,o,v";
         console.log(apiCallString);
 
-        // Default dump 7lines
-        var linesToDump = 7;
-        // If exchange     =      HKG/TYO/SHA
-        if (exchange === 'SKG' || exchange === 'TYO' || exchange === 'SHA') {
-            linesToDump = 8;
-        }
-
-
         var result = Meteor.http.call("GET", apiCallString);
 
-        //Result.content is a long string
-        var result_arr = result.content.split(/\r?\n/); // split into array by '\n'
-
-        //get interval =
-        var interval = result_arr[3].substr(9);
-
-
-        //dump first 7 lines and last line
-        result_arr.splice(0, linesToDump);
-        result_arr.splice(-1, 1);
+        var result_arr = parse_and_clean_resultstring(result, exchange);
 
         if (result_arr.length < 1) {
             return;      //invalid content , return
         }
+        
+        return parse_and_clean_resultarray(result_arr, interval, startdate, graphlen);
 
-        var firstdate;
-        var dataarr = [];
-
-        for (var i = 0; i < result_arr.length; i++) {
-            var dataobj = {};
-            var splitagain = result_arr[i].split(','); // split into array by '\n'
-            var datestring = splitagain[0];
-            if (datestring.charAt(0) == 'a') {
-                datestring = datestring.substring(1);  // remove a
-                var date = new Date(0);
-                date.setUTCSeconds(datestring);
-                firstdate = date;
-                dataobj.date = firstdate;
-
-                //  Day Summary     // Comment out for now
-                // CURRENT CONDITION FOR DAY SUMMARY : when a and i!=0
-                // CHANGE CONDITION TO : Compare DATE WITH PREVIOUS : if day change
-                // if (i != 0) {
-                //     daySummary.vol = Math.round(daySummary.vol * 10) / 10;
-                //     dataarr.push(daySummary); // pushing day summary
-                // }
-                //
-                // //Create new total Obj
-                // var daySummary = {};
-                // daySummary.date = "Day Summary";
-                // daySummary.close = splitagain[1];
-                // daySummary.high = splitagain[2];
-                // daySummary.low = splitagain[3];
-                // daySummary.open = splitagain[4];
-                // daySummary.vol = 0;
-
-            }
-            else {
-                var thisdate = new Date(0);
-                thisdate.setUTCSeconds(firstdate.getTime() / 1000 + interval * splitagain[0]);
-                dataobj.date = thisdate;
-            }
-
-            dataobj.close = splitagain[1];
-            dataobj.high = splitagain[2];
-            dataobj.low = splitagain[3];
-            dataobj.open = splitagain[4];
-            dataobj.vol = parseFloat(splitagain[5]) / 1000;//Math.round(parseFloat(splitagain[5]) / 100) / 10;
-
-            // Day Summary     // Comment out for now
-            // daySummary.high = parseFloat(dataobj.high) > parseFloat(daySummary.high) ? dataobj.high : daySummary.high;
-            // daySummary.low = parseFloat(dataobj.low) < parseFloat(daySummary.low) ? dataobj.low : daySummary.low;
-            // daySummary.close = dataobj.close;
-            // daySummary.vol += dataobj.vol;
-            dataarr.push(dataobj);
-        }
-        //  Day Summary     // Comment out for now
-        // daySummary.vol = Math.round(daySummary.vol * 10) / 10;
-        // dataarr.push(daySummary);
-        return dataarr;
     },
     fetchHistory: function () {
         var watchlist = Watchlist.find();
@@ -165,3 +95,77 @@ function parseResultStringToArray(string) {
     result.splice(-1, 1);
     return result;
 }
+
+
+parse_and_clean_resultstring = function (result, exchange) {
+
+    // Default dump 7lines
+    var linesToDump = 7;
+    // If exchange     =      HKG/TYO/SHA
+    if (exchange === 'SKG' || exchange === 'TYO' || exchange === 'SHA') {
+        linesToDump = 8;
+    }
+
+    var result_arr = result.content.split(/\r?\n/); // split into array by '\n'
+
+    result_arr.splice(0, linesToDump);
+    result_arr.splice(-1, 1);
+
+    return result_arr;
+};
+
+parse_and_clean_resultarray = function (result_arr, interval, startdate, graphlen) {
+
+    var firstdate;
+    var day_counter = 0;
+    var dataarr = [];
+
+    for (var i = 0; i < result_arr.length; i++) {
+
+        var dataobj = {};
+        var splitagain = result_arr[i].split(','); // split into array by '\n'
+        var datestring = splitagain[0];
+        if (datestring.charAt(0) == 'a') {
+            datestring = datestring.substring(1);  // remove a
+            var date = new Date(0);
+            date.setUTCSeconds(datestring);
+            firstdate = date;
+            dataobj.date = firstdate;
+        }
+        else {
+            var thisdate = new Date(0);
+            thisdate.setUTCSeconds(firstdate.getTime() / 1000 + interval * splitagain[0]);
+            dataobj.date = thisdate;
+        }
+
+        // REJECT IF:
+        // Array Date Earlier than startdate
+        // graphlen reach 0   ->  enough data for duration
+        if (startdate && ((startdate > dataobj.date) || (graphlen <= 0))) {
+            continue;
+        }
+
+        if (day_counter == 0) {
+            day_counter = dataobj.date.getDate();
+        }
+        else {
+            if (day_counter != dataobj.date.getDate()) {
+                day_counter = dataobj.date.getDate();
+                graphlen--;
+                if (graphlen == 0) {
+                    continue;
+                }
+            }
+        }
+
+        dataobj.close = splitagain[1];
+        dataobj.high = splitagain[2];
+        dataobj.low = splitagain[3];
+        dataobj.open = splitagain[4];
+        dataobj.vol = parseFloat(splitagain[5]) / 1000;//Math.round(parseFloat(splitagain[5]) / 100) / 10;
+
+        dataarr.push(dataobj);
+
+    }
+    return dataarr;
+};

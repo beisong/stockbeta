@@ -1,8 +1,15 @@
-<template name="liveform">
+<template name="historyform">
 
-    <div class="liveform">
-        <h1>Find your stock!</h1>
-        <form class="form-inline live_form">
+
+    <div class="historyform">
+        <h1>Stock History</h1>
+        <form class="form-inline history_form">
+
+            <!--<h1>Duration</h1>-->
+            <!--<h1>StartDate</h1>-->
+            <!--<h1>StockCode</h1>-->
+            <!--<h1>Default sgx, 15min interval</h1>-->
+
             <div class="dropdown">
                 <select name="exchange" id="exchange">
                     <option disabled {{checkLastUsed 'default'}}>Choose Market</option>
@@ -12,17 +19,23 @@
                     <option value="NYSEAMERICAN" {{checkLastUsed 'NYSEAMERICAN'}}>New York - NYSE AMERICAN</option>
                     <option value="SGX" {{checkLastUsed 'SGX'}}>Singapore - SGX</option>
                     <option value="LON" {{checkLastUsed 'LON'}}>London - LON</option>
-                    <option value="EPA" {{checkLastUsed 'EPA'}}>Paris - EPA</option>
-                    <option value="FRA" {{checkLastUsed 'FRA'}}>Frankfurt - FRA</option>
+                    <option value="INDEXEURO" {{checkLastUsed 'INDEXEURO'}}>Europe - INDEXEURO</option>
                     <option value="ASX" {{checkLastUsed 'ASX'}}>Aus - ASX</option>
                     <option value="TSE" {{checkLastUsed 'TSE'}}>Toronto - TSX</option>
-                    <option value="TPE" {{checkLastUsed 'TPE'}}>Taiwan - TPE</option>
+                    <option value="HKG" {{checkLastUsed 'HKG'}}>Hong Kong - HKEX</option>
                     <option value="TYO" {{checkLastUsed 'TYO'}}>Tokyo - TYO</option>
                     <option value="SHA" {{checkLastUsed 'SHA'}}>Shanghai - SHA</option>
                 </select>
             </div>
-            <input type="text" name="code" placeholder="Stock Code">
-            <button type="submit" class="btn btn-primary btn-block btn-large">Go</button>
+            <label>Stock Ticker Symbol</label>
+            <input type="text" name="code" placeholder="AAPL">
+            <label>From</label>
+
+            <input type="text" name="date" placeholder="Startdate" id="start-datepicker">
+            <label>Duration</label>
+
+            <input type="number" name="duration" placeholder="Duration (days)" value="5" min="0">
+            <button type=" submit" class="btn btn-primary btn-block btn-large">Go</button>
         </form>
     </div>
 </template>

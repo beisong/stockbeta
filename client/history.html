@@ -1,10 +1,10 @@
 <template name="history">
 
-    <h1>{{code}} for {{paramdate}}</h1>
+    <h1 class="white">{{code}} for {{dateWithoutTime paramdate}}</h1>
 
-    <svg id="chartArea"></svg>
-
-    <h3>Raw Data</h3>
+    <div class="card">
+        <svg id="historyChartArea"></svg>
+    </div>
 
     <div class="container">
         <table class="table table-striped">
@@ -19,9 +19,9 @@
             </tr>
             </thead>
             <tbody>
-            {{#each daydata}}
+            {{#each historydata}}
                 <tr>
-                    <td>{{date}}</td>
+                    <td>{{formatedate date}}</td>
                     <td>{{open}}</td>
                     <td>{{high}}</td>
                     <td>{{low}}</td>

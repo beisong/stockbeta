@@ -14,8 +14,28 @@ Template.registerHelper('checkLastUsed', (value)=> {
 );
 
 Template.registerHelper('formatedate', (thisdate)=> {
-        // return moment(thisdate).format('h:mma  DD-MMM-YY');
-        return moment(thisdate).calendar();
+        return moment(thisdate).calendar(
+            null, {
+                lastDay: '[Yesterday at] LT',
+                sameDay: '[Today at] LT',
+                nextDay: '[Tomorrow at] LT',
+                lastWeek: 'dddd [at] LT',
+                nextWeek: 'dddd [at] LT',
+                sameElse: 'DD/MM/YYYY [at] LT'
+            });
+    }
+);
+
+Template.registerHelper('dateWithoutTime', (thisdate)=> {
+        return moment(thisdate).calendar(
+            null, {
+                lastDay: '[Yesterday] ',
+                sameDay: '[Today] ',
+                nextDay: '[Tomorrow] ',
+                lastWeek: 'dddd ',
+                nextWeek: 'dddd ',
+                sameElse: 'DD/MM/YYYY '
+            });
     }
 );
 
@@ -35,13 +55,14 @@ drawCandleChart = function (divid, data) {
     width = window.innerWidth - margin.left - margin.right;
 
 
-    if (window.innerWidth < 500) {
+    if (window.innerWidth < 799) {
         width = window.innerWidth - margin.left - margin.right;
         height = Math.round(width * 0.8);
     }
     else {
         width = Math.round(window.innerWidth * 0.8) - margin.left - margin.right;
-        height = window.innerHeight * 0.7;
+        // height = window.innerHeight * 0.7;
+        height = Math.round(width * 0.45);
     }
 
     var parseDate = d3.time.format("%d-%b-%y");
@@ -84,6 +105,10 @@ drawCandleChart = function (divid, data) {
     // });
 
     // var data = Session.get('data');
+    svg.selectAll("g.candlestick")
+        .on('click', function (d, i, x) {
+            console.log(d3.select(this).datum()); // will return all of values. I want a value of this item.
+        });
 
     var accessor = candlestick.accessor();
 

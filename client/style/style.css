@@ -118,7 +118,11 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3E1D6D', endColorstr='#092756', GradientType=1);
 }
 
-.liveform {
+.white{
+    color:white;
+}
+
+.liveform, .historyform {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -127,11 +131,15 @@ body {
     height: 300px;
 }
 
-.liveform h1 {
+.liveform h1, .historyform h1 {
     color: #fff;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     letter-spacing: 1px;
     text-align: center;
+}
+
+label {
+    color: #fff;
 }
 
 input {
@@ -193,7 +201,7 @@ table {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 799px) {
     select {
         font-size: 16px !important;
     }
