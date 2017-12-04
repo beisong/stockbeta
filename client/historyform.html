@@ -5,11 +5,6 @@
         <h1>Stock History</h1>
         <form class="form-inline history_form">
 
-            <!--<h1>Duration</h1>-->
-            <!--<h1>StartDate</h1>-->
-            <!--<h1>StockCode</h1>-->
-            <!--<h1>Default sgx, 15min interval</h1>-->
-
             <div class="dropdown">
                 <select name="exchange" id="exchange">
                     <option disabled {{checkLastUsed 'default'}}>Choose Market</option>
@@ -34,7 +29,7 @@
             <input type="text" name="date" placeholder="Startdate" id="start-datepicker">
             <label>Duration</label>
 
-            <input type="number" name="duration" placeholder="Duration (days)" value="5" min="0">
+            <input type="number" name="duration" placeholder="Duration (days)" value="7" min="0">
             <button type=" submit" class="btn btn-primary btn-block btn-large">Go</button>
         </form>
     </div>

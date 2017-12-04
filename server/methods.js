@@ -16,7 +16,7 @@ Meteor.methods({
         if (result_arr.length < 1) {
             return;      //invalid content , return
         }
-        
+
         return parse_and_clean_resultarray(result_arr, interval, startdate, graphlen);
 
     },
@@ -101,8 +101,8 @@ parse_and_clean_resultstring = function (result, exchange) {
 
     // Default dump 7lines
     var linesToDump = 7;
-    // If exchange     =      HKG/TYO/SHA
-    if (exchange === 'SKG' || exchange === 'TYO' || exchange === 'SHA') {
+    // If exchange     =      HKG/TYO/SHA/SGX
+    if (exchange === 'SKG' || exchange === 'TYO' || exchange === 'SHA' || exchange === 'SGX') {
         linesToDump = 8;
     }
 

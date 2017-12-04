@@ -91,6 +91,10 @@ drawCandleChart = function (divid, data) {
         .orient("left")
         .scale(y);
 
+    ////////////// CROSSHAIR    //////////////////
+
+    ////////////// CROSSHAIR    //////////////////
+
     d3.selectAll("svg > *").remove(); // Clear svg child element first
 
     var svg = d3.select("#" + divid)
@@ -99,16 +103,7 @@ drawCandleChart = function (divid, data) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // d3.csv("data.csv", function (error, data) {
-    //     console.log("csv data is ");
-    //     console.log(data);
-    // });
-
-    // var data = Session.get('data');
-    svg.selectAll("g.candlestick")
-        .on('click', function (d, i, x) {
-            console.log(d3.select(this).datum()); // will return all of values. I want a value of this item.
-        });
+    // TODO Hover show value
 
     var accessor = candlestick.accessor();
 
