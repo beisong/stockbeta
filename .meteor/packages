@@ -25,8 +25,9 @@ iron:router                             #router
 twbs:bootstrap                          #Twitter bootstrap
 session                                 #Session Package
 http                                    #HTTP for api calls
-d3js:d3                                # d3 for charting
-superandrew:techan                      #techan for candlestick
-okgrow:analytics                            #Analytics
-momentjs:moment                            #format date
+####  Change to using cdn script
+#superandrew:techan                     #techan for candlestick
+#d3js:d3                                #d3 for charting
+okgrow:analytics                        #Analytics
+momentjs:moment                         #format date
 rajit:bootstrap3-datepicker

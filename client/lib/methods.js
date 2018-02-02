@@ -9,7 +9,6 @@ Template.registerHelper('checkLastUsed', (value)=> {
                 return 'selected';
             }
         }
-
     }
 );
 
@@ -65,34 +64,48 @@ drawCandleChart = function (divid, data) {
         height = Math.round(width * 0.45);
     }
 
-    var parseDate = d3.time.format("%d-%b-%y");
+    var parseDate = d3.timeParse("%d-%b-%y");
 
     var x = techan.scale.financetime()
         .range([0, width]);
 
-    var y = d3.scale.linear()
+    var y = d3.scaleLinear()
         .range([height, 0]);
     ////////////// VOLUME    //////////////////
-    var yVolume = d3.scale.linear()
+    var yVolume = d3.scaleLinear()
         .range([y(0), y(0.2)]);
-
-
     ////////////// VOLUME    //////////////////
 
     var candlestick = techan.plot.candlestick()
         .xScale(x)
         .yScale(y);
 
-    var xAxis = d3.svg.axis()
-        .orient("bottom")
-        .scale(x);
+    var xAxis = d3.axisBottom(x);
+    var yAxis = d3.axisLeft(y);
 
-    var yAxis = d3.svg.axis()
-        .orient("left")
-        .scale(y);
 
     ////////////// CROSSHAIR    //////////////////
+    var ohlcAnnotation = techan.plot.axisannotation()
+        .axis(yAxis)
+        .orient('left')
+        .format(d3.format(',.2f'));
 
+
+    var timeAnnotation = techan.plot.axisannotation()
+        .axis(xAxis)
+        .orient('bottom')
+        .format(d3.timeFormat('%d %b %H:%M'))
+        .width(65)
+        .translate([0, height]);
+
+    var crosshair = techan.plot.crosshair()
+        .xScale(x)
+        .yScale(y)
+        .xAnnotation(timeAnnotation)
+        .yAnnotation(ohlcAnnotation)
+        .on("enter", enter)
+        .on("out", out)
+        .on("move", move);
     ////////////// CROSSHAIR    //////////////////
 
     d3.selectAll("svg > *").remove(); // Clear svg child element first
@@ -103,7 +116,11 @@ drawCandleChart = function (divid, data) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // TODO Hover show value
+    var coordsText = svg.append('text')
+        .style("text-anchor", "end")
+        .attr("class", "coords")
+        .attr("x", width - 5)
+        .attr("y", 15);
 
     var accessor = candlestick.accessor();
 
@@ -138,6 +155,7 @@ drawCandleChart = function (divid, data) {
         .attr("class", "volume axis");
     ////////////// VOLUME    //////////////////
 
+    ////////////// CROSSHAIR    //////////////////
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")");
@@ -151,6 +169,10 @@ drawCandleChart = function (divid, data) {
         .style("text-anchor", "end")
         .text("Price ($)");
 
+    svg.append('g')
+        .attr("class", "crosshair");
+    ////////////// CROSSHAIR    //////////////////
+
     draw(data);
 
     function draw(data) {
@@ -161,8 +183,30 @@ drawCandleChart = function (divid, data) {
         svg.select("g.volume").datum(data).call(volume);
         ////////////// VOLUME    //////////////////
 
+        ////////////// CROSSHAIR    //////////////////
         svg.selectAll("g.candlestick").datum(data).call(candlestick);
         svg.selectAll("g.x.axis").call(xAxis);
         svg.selectAll("g.y.axis").call(yAxis);
+        svg.selectAll("g.crosshair")
+            .datum({x: x.domain()[80], y: 67.5})
+            .call(crosshair)
+            .each(function (d) {
+                move(d);
+            });
+        ////////////// CROSSHAIR    //////////////////
     }
-}
+
+    function enter() {
+        coordsText.style("display", "inline");
+    }
+
+    function out() {
+        coordsText.style("display", "none");
+    }
+
+    function move(coords) {
+        coordsText.text(
+            timeAnnotation.format()(coords.x) + ", " + ohlcAnnotation.format()(coords.y)
+        );
+    }
+};
