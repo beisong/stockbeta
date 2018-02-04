@@ -52,3 +52,9 @@ path.volume {
 .crosshair .axisannotation path {
     fill: #CCCCCC;
 }
+
+rect.pane {
+    cursor: move;
+    fill: none;
+    pointer-events: all;
+}

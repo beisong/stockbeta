@@ -45,6 +45,50 @@ Template.registerHelper("lastdone", function (array) {
     }
 });
 
+Template.registerHelper("bigtrade", function (close, vol) {
+    return (vol > Session.get('bigvol'));
+
+});
+Template.registerHelper("getcolor", function (open, close) {
+    if (open > close) {
+        return "#ff8080";
+    }
+    else if (close > open) {
+        return "#00e6ac";
+    }
+    else {
+        return "white";
+    }
+});
+Template.registerHelper("diff", function (open, close) {
+    var precisionopen, precisionclose, precision;
+
+    if ((open + "").indexOf(".") > 0) { // Check decimal avail
+        precisionopen = (open + "").split(".")[1].length;
+    }
+    else {
+        precisionopen = 0;
+    }
+
+    if ((close + "").indexOf(".") > 0) {
+        precisionclose = (close + "").split(".")[1].length;
+    }
+    else {
+        precisionclose = 0;
+    }
+
+    if (precisionopen == precisionclose) {
+        precision = precisionopen;
+    }
+    if (precisionopen > precisionclose) {
+        precision = precisionopen
+    }
+    if (precisionopen < precisionclose) {
+        precision = precisionclose
+    }
+    return (close - open).toFixed(precision);
+});
+
 drawCandleChart = function (divid, data) {
 
     var margin = {top: 20, right: 20, bottom: 30, left: 50}, width, height;
@@ -90,12 +134,11 @@ drawCandleChart = function (divid, data) {
         .orient('left')
         .format(d3.format(',.2f'));
 
-
     var timeAnnotation = techan.plot.axisannotation()
         .axis(xAxis)
         .orient('bottom')
         .format(d3.timeFormat('%d %b %H:%M'))
-        .width(65)
+        .width(90)
         .translate([0, height]);
 
     var crosshair = techan.plot.crosshair()

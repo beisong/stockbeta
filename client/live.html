@@ -1,8 +1,25 @@
 <template name="live">
 
     <div class="container">
-        <h3 class="white">
-            Intraday Chart for {{code}}  | <span style="color:wheat">${{lastdone data}}</span></h3>
+        <h3 class="white" style="display: inline;">
+            Intraday Chart for {{code}}  | <span style="color:wheat">${{lastdone data}}</span>
+        </h3>
+
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="1daybut" checked> 1 Day
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="3daybut"> 3 Days
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="7daybut"> 7 Days
+            </label>
+        </div>
+
+        <!--<button type="button" class="btn btn-primary" id="1daybut" style="display: inline;">1 Day</button>-->
+        <!--<button type="button" class="btn btn-primary" id="3daybut" style="display: inline;">3 Days</button>-->
+        <!--<button type="button" class="btn btn-primary" id="7daybut" style="display: inline;">7 Days</button>-->
     </div>
 
     <div class="card">
@@ -10,27 +27,32 @@
     </div>
 
     <div class="container">
-        <table class="table table-striped">
+        <h3 class="white">High Vol Trades</h3>
+        <table class="table">
             <thead>
             <tr>
                 <th>Date</th>
                 <th>Open</th>
-                <th>High</th>
-                <th>Low</th>
+                <!--<th>High</th>-->
+                <!--<th>Low</th>-->
                 <th>Close</th>
+                <th>Change</th>
                 <th>Vol</th>
             </tr>
             </thead>
             <tbody>
             {{#each data}}
-                <tr>
-                    <td>{{formatedate date}}</td>
-                    <td>{{open}}</td>
-                    <td>{{high}}</td>
-                    <td>{{low}}</td>
-                    <td>{{close}}</td>
-                    <td>{{vol}}</td>
-                </tr>
+                {{#if bigtrade close vol}}
+                    <tr bgcolor="{{getcolor open close}}">
+                        <td>{{formatedate date}}</td>
+                        <td>{{open}}</td>
+                        <!--<td>{{high}}</td>-->
+                        <!--<td>{{low}}</td>-->
+                        <td>{{close}}</td>
+                        <td>{{diff open close}}</td>
+                        <td>{{vol}}</td>
+                    </tr>
+                {{/if}}
             {{/each}}
             </tbody>
         </table>

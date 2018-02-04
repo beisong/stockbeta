@@ -1,24 +1,41 @@
 Template.live.onCreated(function () {
-
+    if (!Session.get('duration')) {
+        Session.set('duration', 1);
+    }
     Meteor.call("getStockData",
         Router.current().params.exchange.toUpperCase(),
         Router.current().params.code.toUpperCase(),
-        '1d',
-        "60",
+        '4d',
+        "86400",
         function (error, results) {
             if (results) {
-                Session.set('data', results);
-                // console.log("getStockData API CALL");
+                var avevol = (results[1].vol + results[2].vol + results[3].vol) / 300;
+                // console.log(avevol);
+                Session.set('bigvol', avevol);
             }
             else {
-                alert("Nothing found. Please Try again...");
-                Router.go('home');
+                console.log("bigvol not found");
             }
         });
 });
 
 Template.live.onRendered(function () {
     this.autorun(function () {
+        Meteor.call("getStockData",
+            Router.current().params.exchange.toUpperCase(),
+            Router.current().params.code.toUpperCase(),
+            Session.get('duration') + 'd',
+            "60",
+            function (error, results) {
+                if (results) {
+                    Session.set('data', results);
+                }
+                else {
+                    alert("Nothing found. Please Try again...");
+                    Router.go('home');
+                }
+            });
+
         if (Session.get('data')) {
             drawCandleChart('candleChartArea', Session.get('data'));
         }
@@ -35,4 +52,17 @@ Template.live.helpers({
             return Session.get('data');
         }
     },
+});
+
+Template.live.events({
+    'change #1daybut'(event) {
+        Session.set('duration', 1);
+    },
+    'change #3daybut'(event) {
+        Session.set('duration', 3);
+    },
+    'change #7daybut'(event) {
+        Session.set('duration', 7);
+    },
+
 });
