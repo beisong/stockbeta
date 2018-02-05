@@ -9,8 +9,7 @@ Template.live.onCreated(function () {
         "86400",
         function (error, results) {
             if (results) {
-                var avevol = (results[1].vol + results[2].vol + results[3].vol) / 300;
-                // console.log(avevol);
+                var avevol = (results[0].vol + results[1].vol + results[2].vol) / 300;
                 Session.set('bigvol', avevol);
             }
             else {

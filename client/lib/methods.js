@@ -51,10 +51,10 @@ Template.registerHelper("bigtrade", function (close, vol) {
 });
 Template.registerHelper("getcolor", function (open, close) {
     if (open > close) {
-        return "#ff8080";
+        return "#ed9e9e";
     }
     else if (close > open) {
-        return "#00e6ac";
+        return "#a8edc3";
     }
     else {
         return "white";
