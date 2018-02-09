@@ -18,6 +18,9 @@ Template.history.onCreated(function () {
 
     var interval = 3600; // Default interval 1hr
 
+    if (graph_len <= 3) {
+        interval = 60;
+    }
     //Dynamic interval based on graphlen and how long ago // disabled for now
     // switch (true) {
     //     case graph_len <= 7 && monthfromnow < 11:    //10-29days        // less than 11 monthfromnow
